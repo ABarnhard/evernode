@@ -9,17 +9,14 @@ module.exports = {
   validate: {
     payload: {
       username: Joi.string().min(3).max(12).required(),
-      password: Joi.string().min(3).required()
+      password: Joi.string().min(3).required(),
+      avatar: Joi.string().required()
     }
   },
-  auth: {
-    mode: 'try'
-  },
+  auth: false,
   handler: function(request, reply){
-    var user = new User(request.payload);
-    user.encrypt();
-    user.save(function(err){
-      reply().code(err ? 401 : 200);
+    User.register(request.payload, function(err){
+      reply().code(err ? 400 : 200);
     });
   }
 };
