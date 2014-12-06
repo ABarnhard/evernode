@@ -14,24 +14,18 @@ Note.create = function(obj, cb){
   // console.log(obj);
   // console.log(obj.photos[0].hapi.filename);
 
-  obj.tags = Note.sanitizeTags(obj.tags);
+  obj.tags = Note.sanitizeTags(obj.tags || '');
 
   pg.query('select add_note($1, $2, $3, $4)', [obj.userId, obj.title, obj.body, obj.tags], function(err, results){
     if(err || !(results && results.rows)){return cb(err || 'Note failed to add correctly', null);}
-    console.log(results.rows[0].add_note);
+    // console.log(results.rows[0].add_note);
     var noteId = results.rows[0].add_note;
-    if(!obj.photos){
-      console.log('no photos');
-      cb(err, noteId);
-    }
 
-    if(!Array.isArray(obj.photos)){
-      console.log('make photos an array');
-      obj.photos = [obj.photos];
-    }
+    if(!obj.photos){return cb(err, noteId);}
+
+    if(!Array.isArray(obj.photos)){obj.photos = [obj.photos];}
 
     var photos = obj.photos.map(function(obj, i){
-      console.log('photoId:', i);
       return {noteId:noteId, photoId:i, stream:obj};
     });
 

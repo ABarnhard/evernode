@@ -5,6 +5,7 @@ CREATE TABLE users(
     avatar VARCHAR(500) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now()
 );
+
 CREATE TABLE notes(
   id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
@@ -13,20 +14,24 @@ CREATE TABLE notes(
   updated_at TIMESTAMP NOT NULL DEFAULT now(),
   user_id INTEGER NOT NULL REFERENCES users(id)
 );
+
 CREATE TABLE tags(
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL UNIQUE,
   created_at TIMESTAMP NOT NULL DEFAULT now()
 );
+
 CREATE TABLE notes_tags(
   note_id INTEGER NOT NULL REFERENCES notes(id),
   tag_id INTEGER NOT NULL REFERENCES tags(id)
 );
+
 CREATE TABLE photos(
   id SERIAL PRIMARY KEY,
   url VARCHAR(500) NOT NULL,
   note_id INTEGER NOT NULL REFERENCES notes(id)
 );
+
 CREATE OR REPLACE FUNCTION add_note(user_id integer, title varchar, body text, tags varchar)
 RETURNS integer AS $$
 DECLARE
@@ -59,5 +64,41 @@ BEGIN
   -- return the note id
   return nid;
 end;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION add_photos(url_string varchar, nid integer)
+RETURNS integer AS $$
+DECLARE
+  result integer;
+  urls varchar[];
+  pic_url varchar;
+BEGIN
+  -- turn string into array
+  SELECT string_to_array(url_string, ',') INTO urls;
+  RAISE NOTICE 'urls: %', urls;
+  FOREACH pic_url IN ARRAY urls
+  LOOP
+    INSERT INTO photos (url,note_id) VALUES (pic_url, nid) RETURNING id INTO result;
+  END LOOP;
+  RETURN result;
+end;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION query_notes (uid integer, lmt integer, ofst integer)
+RETURNS TABLE ("noteId" integer, title varchar, body text, "updatedAt" timestamp, "tagIds" integer[], "tagNames" varchar[]) AS $$
+DECLARE
+BEGIN
+  RETURN QUERY
+    SELECT n.id AS "noteId", n.title, n.body, n.updated_at AS "updatedAt", array_agg(t.id) AS "tagIds", array_agg(t.name) AS "tagNames"
+    FROM notes n
+    LEFT OUTER JOIN notes_tags nt ON n.id = nt.note_id
+    LEFT OUTER JOIN tags t ON nt.tag_id = t.id 
+    WHERE n.user_id = uid
+    GROUP BY n.id
+    ORDER BY n.updated_at DESC
+    OFFSET ofst
+    LIMIT lmt;
+
+END;
 $$ language plpgsql;
 
