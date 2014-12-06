@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('evernode', ['ui.router'])
-    .config(['$stateProvider', '$urlRouterProvider', '$localForageProvider', function($stateProvider, $urlRouterProvider){
+    .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
       $urlRouterProvider.otherwise('/');
 
       $stateProvider
