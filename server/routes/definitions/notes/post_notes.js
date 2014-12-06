@@ -22,7 +22,7 @@ module.exports = {
   handler: function(request, reply){
     request.payload.userId = request.auth.credentials.id;
     Note.create(request.payload, function(err, noteId){
-      reply({noteId:noteId}).code(err ? 400 : 200);
+      reply({noteId:noteId}).code(err ? 418 : 200);
     });
   }
 };
