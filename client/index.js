@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('evernode', ['ui.router'])
+  angular.module('evernode', ['ui.router', 'angularFileUpload'])
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
       $urlRouterProvider.otherwise('/');
 

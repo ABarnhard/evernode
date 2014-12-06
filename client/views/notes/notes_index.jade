@@ -15,16 +15,16 @@ h1 NOTES
             span.tag(ng-repeat='name in note.tag_names')
               a(href='/notes?tag={{name}}') {{name}}
   .small-4.columns
-    form
+    form(name='noteForm', enctype='multipart/form-data')
       fieldset
         legend Create Note
         label Title
         input(type='text', ng-model='note.title')
-        label Note	
+        label Note
         textarea(ng-model='note.body')
         label Tags
         input(type='text', ng-model='note.tags', placeholder='tag1,tag2,tag3')
         label Photos
-        input(type='file')
+        input(ng-file-select, type='file', name='files', accept="image/*", ng-model='photos', ng-file-model='photos', ng-multiple='true')
         button.radius.success(type='button', ng-click='create(note)') Create
 
