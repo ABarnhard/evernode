@@ -16,6 +16,7 @@
   "author": "Adam Barnhard <admbarn@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.0.30",
     "bcrypt": "^0.8.0",
     "bower": "^1.3.12",
     "good": "^4.0.0",
@@ -34,6 +35,7 @@
     "hapi-auth-cookie": "^1.4.0",
     "joi": "^4.9.0",
     "jshint-stylish": "^1.0.0",
-    "lout": "^5.1.2"
+    "lout": "^5.1.2",
+    "pg": "^4.1.0"
   }
 }
