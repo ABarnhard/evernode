@@ -1,1 +1,30 @@
-h1 Notes Index
+h1 NOTES
+
+.row
+  .small-8.columns
+    h3 VIEW
+    table#notes
+      thead
+        tr
+          th Title
+          th Tags
+      tbody
+        tr(ng-repeat='note in notes')
+          td {{note.title}}
+          td
+            span.tag(ng-repeat='name in note.tag_names')
+              a(href='/notes?tag={{name}}') {{name}}
+  .small-4.columns
+    form
+      fieldset
+        legend Create Note
+        label Title
+        input(type='text', ng-model='note.title')
+        label Note	
+        textarea(ng-model='note.body')
+        label Tags
+        input(type='text', ng-model='note.tags', placeholder='tag1,tag2,tag3')
+        label Photos
+        input(type='file')
+        button.radius.success(type='button', ng-click='create(note)') Create
+

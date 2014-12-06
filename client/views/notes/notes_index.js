@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('evernode')
-    .controller('NotesIndexCtrl', ['$rootScope', '$scope', '$state', function($rootScope, $scope, $state){
+    .controller('NotesIndexCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
 
     }]);
 })();
