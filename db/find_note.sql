@@ -10,13 +10,13 @@ BEGIN
     LEFT OUTER JOIN tags t ON nt.tag_id = t.id
     WHERE n.id = nid AND n.user_id = uid
     GROUP BY n.id;
-    
+
   CREATE TEMP TABLE all_photos ON COMMIT DROP AS
     SELECT array_agg(p.url) AS photos, p.note_id
     FROM photos p
     WHERE p.note_id = nid
     GROUP BY p.note_id;
-    
+
   RETURN QUERY
     SELECT nd.note_id AS "noteId", nd.title, nd.body, nd.updated_at AS "updatedAt", nd.tag_ids AS "tagIds", nd.tag_names AS "tagNames", p.photos
     FROM note_data nd

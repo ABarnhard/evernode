@@ -10,7 +10,7 @@ module.exports = {
     query: {
       limit: Joi.number(),
       offset: Joi.number(),
-      filter: Joi.string()
+      filter: [Joi.string(), Joi.any().allow('')]
     }
   },
   handler: function(request, reply){
