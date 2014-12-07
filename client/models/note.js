@@ -16,14 +16,18 @@
       }
 
       function query(limit, offset, filter){
-        limit = limit || '';
+        limit  = limit  || '';
         offset = offset || '';
         filter = filter || '';
 
-        return $http.get('/notes?limit='+limit+'&offset='+offset+'&filter='+filter);
+        return $http.get('/notes?limit=' + limit + '&offset=' + offset + '&filter=' + filter);
       }
 
-      return {create:create, query:query};
+      function findOne(noteId){
+        return $http.get('/notes/' + noteId);
+      }
+
+      return {create:create, query:query, findOne:findOne};
     }]);
 })();
 

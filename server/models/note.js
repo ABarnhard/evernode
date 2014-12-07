@@ -47,15 +47,25 @@ Note.sanitizeTags = function(s){
   return tags.join(',');
 };
 
-Note.query = function(params, cb){
-  console.log(params);
-  params.limit = params.limit || 10;
-  params.offset = params.offset || 0;
-  params.filter = params.filter || '';
+Note.query = function(query, cb){
+  console.log(query);
+  query.limit = query.limit || 10;
+  query.offset = query.offset || 0;
+  query.filter = query.filter || '';
 
   var queryString = 'SELECT * FROM query_notes($1,$2,$3)',
-      queryParams = [params.userId, params.limit, params.offset];
-  pg.query(queryString,queryParams,function(err, results){
+      queryParams = [query.userId, query.limit, query.offset];
+
+  pg.query(queryString, queryParams, function(err, results){
+    cb(err, results.rows);
+  });
+};
+
+Note.findOne = function(params, cb){
+  var queryString = 'SELECT * FROM find_note($1,$2)',
+      queryParams = [params.userId, params.noteId];
+
+  pg.query(queryString, queryParams, function(err, results){
     cb(err, results.rows);
   });
 };

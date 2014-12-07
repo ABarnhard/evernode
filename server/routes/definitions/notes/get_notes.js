@@ -7,15 +7,15 @@ module.exports = {
   description: 'Return requested notes for user',
   tags:['notes'],
   validate: {
-    params: {
+    query: {
       limit: Joi.number(),
       offset: Joi.number(),
       filter: Joi.string()
     }
   },
   handler: function(request, reply){
-    request.params.userId = request.auth.credentials.id;
-    Note.query(request.params, function(err, notes){
+    request.query.userId = request.auth.credentials.id;
+    Note.query(request.query, function(err, notes){
       reply(notes).code(err ? 400 : 200);
     });
   }
