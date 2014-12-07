@@ -5,6 +5,8 @@
     .controller('NotesIndexCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
         $scope.notes = [];
 
+        getNotes();
+
         $scope.create = function(note){
             //console.log($scope.photos);
 
@@ -17,8 +19,13 @@
             });
         };
 
-        function getNotes(){
-            Note.query().then(function(res){
+        $scope.viewNote = function(noteId){
+            console.log(noteId);
+            $state.go('notes.show', {noteId:noteId});
+        };
+
+        function getNotes(limit, offset, filter){
+            Note.query(limit, offset, filter).then(function(res){
                 $scope.notes = res.data;
             });
         }

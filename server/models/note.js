@@ -47,6 +47,19 @@ Note.sanitizeTags = function(s){
   return tags.join(',');
 };
 
+Note.query = function(params, cb){
+  console.log(params);
+  params.limit = params.limit || 10;
+  params.offset = params.offset || 0;
+  params.filter = params.filter || '';
+
+  var queryString = 'SELECT * FROM query_notes($1,$2,$3)',
+      queryParams = [params.userId, params.limit, params.offset];
+  pg.query(queryString,queryParams,function(err, results){
+    cb(err, results.rows);
+  });
+};
+
 module.exports = Note;
 
 // HELPER FUNCTIONS //
