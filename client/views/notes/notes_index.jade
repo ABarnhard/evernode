@@ -1,8 +1,7 @@
-h2 NOTES
-
+h2 Make a node of that...
+br
 .row
   .small-8.columns
-    h3 VIEW
     table#notes
       thead
         tr
@@ -26,7 +25,7 @@ h2 NOTES
         label Note
         textarea(ng-model='note.body')
         label Tags
-        input(type='text', ng-model='note.tags', placeholder='tag1,tag2,tag3')
+        input(type='text', ng-model='note.tags', placeholder='tag1, tag2, tag3')
         label Photos
         input(ng-file-select, type='file', name='files', accept="image/*", ng-model='photos', ng-file-model='photos', ng-multiple='true')
         button.radius.success(type='button', ng-click='create(note)') Create
