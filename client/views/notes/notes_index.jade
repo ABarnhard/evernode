@@ -14,6 +14,9 @@ h2 NOTES
           td
             span.tag(ng-repeat='name in note.tagNames')
               a(href='/#/notes?filter={{name}}') {{name}}
+    .pagination-centered
+      ul.pagination
+        li(ng-repeat='page in pages'): a(href='', ng-click='getNotes(10, (page - 1) * 10)') {{page}}
   .small-4.columns
     form(name='noteForm', enctype='multipart/form-data')
       fieldset
