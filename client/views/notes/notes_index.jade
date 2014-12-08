@@ -11,7 +11,7 @@ br
           th Tags
       tbody
         tr(ng-repeat='note in notes')
-          td: a(ng-click='nuke(note)'): img(ng-src='/assets/delete.png')
+          td: a(ng-click='nuke(note.noteId)'): img(ng-src='/assets/delete.png')
           td: a(ui-sref='notes.show({noteId: note.noteId})') {{note.title}}
           td
             span.tag(ng-repeat='name in note.tagNames')

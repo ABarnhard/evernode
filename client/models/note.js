@@ -27,7 +27,11 @@
         return $http.get('/notes/' + noteId);
       }
 
-      return {create:create, query:query, findOne:findOne};
+      function nuke(noteId){
+        return $http.delete('/notes/' + noteId);
+      }
+
+      return {create:create, query:query, findOne:findOne, nuke:nuke};
     }]);
 })();
 

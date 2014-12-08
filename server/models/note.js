@@ -70,6 +70,12 @@ Note.findOne = function(params, cb){
   });
 };
 
+Note.nuke = function(obj, cb){
+  pg.query('select nuke_note($1,$2)', [obj.userId, obj.noteId], function(err, results){
+    cb(err, results && results.rows ? results.rows[0].nuke_note : null);
+  });
+};
+
 module.exports = Note;
 
 // HELPER FUNCTIONS //

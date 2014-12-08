@@ -8,5 +8,6 @@ module.exports = [
   {method: 'get',    path: '/status',         config: require('../definitions/users/get_status')},
   {method: 'post',   path: '/notes',          config: require('../definitions/notes/post_notes')},
   {method: 'get',    path: '/notes',          config: require('../definitions/notes/get_notes')},
-  {method: 'get',    path: '/notes/{noteId}', config: require('../definitions/notes/get_note')}
+  {method: 'get',    path: '/notes/{noteId}', config: require('../definitions/notes/get_note')},
+  {method: 'delete', path: '/notes/{noteId}', config: require('../definitions/notes/delete_note')}
 ];

@@ -47,5 +47,11 @@
             });
         };
 
+        $scope.nuke = function(noteId){
+          Note.nuke(noteId).then(function(response){
+            $state.reload();
+          });
+        };
+
     }]);
 })();
