@@ -6,15 +6,27 @@
         $scope.notes = [];
         $scope.pages = [];
 
+        console.log($state.params);
+
         $scope.getNotes = function(limit, offset, filter){
             $scope.pages = [];
+            limit = limit || 10;
+
+            var page = $state.params.page || 1;
+            offset = (page - 1) * 10;
+
+            filter = filter || $state.params.filter || '%';
+
             Note.query(limit, offset, filter).then(function(res){
                 $scope.notes = res.data;
                 if($scope.notes.length){
                     var noteCount = $scope.notes[0].noteCount,
                         pageCount = Math.ceil(noteCount/10);
+                    console.log('note count:', noteCount);
+                    console.log('page count:', pageCount);
                     for(var i = 1; i <= pageCount; i++){
                         $scope.pages.push(i);
+                        console.log('i from pages loop:', i);
                     }
 
                 }
@@ -33,11 +45,6 @@
             }, function(res){
                 console.log('error adding note', res);
             });
-        };
-
-        $scope.viewNote = function(noteId){
-            console.log(noteId);
-            $state.go('notes.show', {noteId:noteId});
         };
 
     }]);

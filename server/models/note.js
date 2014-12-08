@@ -51,10 +51,10 @@ Note.query = function(query, cb){
   console.log(query);
   query.limit = query.limit || 10;
   query.offset = query.offset || 0;
-  query.filter = query.filter || '';
+  query.filter = query.filter || '%';
 
-  var queryString = 'SELECT * FROM query_notes($1,$2,$3)',
-      queryParams = [query.userId, query.limit, query.offset];
+  var queryString = 'SELECT * FROM query_notes($1,$2,$3,$4)',
+      queryParams = [query.userId, query.limit, query.offset,query.filter];
 
   pg.query(queryString, queryParams, function(err, results){
     cb(err, results.rows);

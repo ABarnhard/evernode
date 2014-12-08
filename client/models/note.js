@@ -18,7 +18,7 @@
       function query(limit, offset, filter){
         limit  = limit  || 10;
         offset = offset || 0;
-        filter = filter || '';
+        filter = filter || '%';
 
         return $http.get('/notes?limit=' + limit + '&offset=' + offset + '&filter=' + filter);
       }
