@@ -10,6 +10,6 @@
 
         $scope.backToIndex = function(){
             $state.go('notes.index');
-        }
+        };
     }]);
 })();
