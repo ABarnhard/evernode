@@ -1,7 +1,7 @@
 'use strict';
 
 var Joi  = require('joi'),
-  User = require('../../../models/user');
+    User = require('../../../models/user');
 
 module.exports = {
   description: 'Login a User',
